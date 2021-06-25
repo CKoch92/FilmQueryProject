@@ -1,10 +1,12 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.List;
+
 public class Film {
 	private int id;
 	private String title;
 	private String description;
-	private String releaseYear;
+	private Integer releaseYear;
 	private int languageId;
 	private int rentalDuration;
 	private double rentalRate;
@@ -12,9 +14,10 @@ public class Film {
 	private double replacementCost;
 	private String rating;
 	private String specialFeatures;
+	private List<Actor> actors;
 	
-	public Film(int id, String title, String description, String releaseYear, int languageId, int rentalDuration,
-			double rentalRate, Integer length, double replacementCost, String rating, String specialFeatures) {
+	public Film(int id, String title, String description, Integer releaseYear, int languageId, int rentalDuration,
+			double rentalRate, Integer length, double replacementCost, String rating, String specialFeatures, List<Actor> actors) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -27,6 +30,7 @@ public class Film {
 		this.replacementCost = replacementCost;
 		this.rating = rating;
 		this.specialFeatures = specialFeatures;
+		this.actors = actors;
 	}
 
 	public Film() {
@@ -57,11 +61,11 @@ public class Film {
 		this.description = description;
 	}
 
-	public String getReleaseYear() {
+	public Integer getReleaseYear() {
 		return releaseYear;
 	}
 
-	public void setReleaseYear(String releaseYear) {
+	public void setReleaseYear(Integer releaseYear) {
 		this.releaseYear = releaseYear;
 	}
 
@@ -121,18 +125,29 @@ public class Film {
 		this.specialFeatures = specialFeatures;
 	}
 
+	public List<Actor> getActors() {
+		return actors;
+	}
+
+	public void setActors(List<Actor> actors) {
+		this.actors = actors;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
 				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
 				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
-				+ ", specialFeatures=" + specialFeatures + "]";
+				+ ", specialFeatures=" + specialFeatures + ", actors=" + actors + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		result = prime * result + languageId;
@@ -159,6 +174,11 @@ public class Film {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
+		if (actors == null) {
+			if (other.actors != null)
+				return false;
+		} else if (!actors.equals(other.actors))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;
@@ -201,6 +221,6 @@ public class Film {
 			return false;
 		return true;
 	}
-	
-	
+
+
 }

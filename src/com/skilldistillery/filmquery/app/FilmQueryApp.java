@@ -43,7 +43,10 @@ public class FilmQueryApp {
   }
 
   private void startUserInterface(Scanner input) {
-		System.out.println("------------------------------------------------");
+	  boolean menuLoop = true;
+		
+		  while(menuLoop) {
+	  	System.out.println("------------------------------------------------");
 		System.out.println("************************************************");
 		System.out.println("------------------------------------------------");
 		System.out.println();
@@ -58,7 +61,7 @@ public class FilmQueryApp {
 		System.out.println("************************************************");    
 		System.out.println("------------------------------------------------");
   
-		String userSelect = input.next();
+		String userSelect = input.nextLine();
   
 		switch (userSelect) {
 		case "1":
@@ -66,19 +69,22 @@ public class FilmQueryApp {
 			System.out.println("Enter a Film ID between 1 and 1000");
 			int userID = input.nextInt();
 			db.userFilmByID(userID);
+			menuLoop = true;
 			break;
 		case "2":
 			System.out.println();
 			System.out.println("Enter a keyword to search for a film");
 			String userWord = input.next();
 			db.userKeywordSearch(userWord);
+			menuLoop = true;
 			break;
 		case "3":
+			menuLoop = false;
 			break;
 		}
 		
   }
-  
+  }
   
 
 

@@ -24,7 +24,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			e.printStackTrace();
 		}
 	}
-/////////////////Method #1: Finds Film 
+/////////////////Method #1: Finds Film by fixed ID
 	@Override
 	public Film findFilmById(int filmId) throws SQLException {
 		Film film = null;
@@ -45,7 +45,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	}
 
-//
+/////////////////Method #2: Finds Actor by fixed ID
 	@Override
 	public Actor findActorById(int actorId) throws SQLException {
 		Actor actor = null;
@@ -62,6 +62,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return actor;
 	}
 
+	/////////////////Method #3: Finds Actor by fixed film ID
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {
 		List<Actor> actors = new ArrayList<Actor>();
@@ -88,6 +89,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return actors;
 	}
 
+/////////////////Method #4: Finds film by user input film ID	
 	@Override
 	public void userFilmByID(int filmId) {
 		if (filmId < 1 || filmId > 1000) {
@@ -128,22 +130,26 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 		}
 	}
-
+	
+/////////////////Method #5: Finds film by user input keyword
 	@Override
 	public void userKeywordSearch(String keyword) {
 
 		try {
 			Connection conn = DriverManager.getConnection(URL, user, pass);
-			String sql = "SELECT film.*, language.* FROM film JOIN language ON film.language_id = language.id WHERE film.title LIKE ? OR film.description LIKE ?";
+			String sql = "SELECT language.*, film.* FROM film JOIN language ON film.language_id = language.id WHERE film.title LIKE ? OR film.description LIKE ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setString(1, "%" + keyword + "%");
 			stmt.setString(2, "%" + keyword + "%");
+			
+			System.out.println(stmt);
+			
 			ResultSet rs = stmt.executeQuery();
 			if (!rs.next()) {
 				System.out.println("No films found with the keyword: " + keyword);
 			}
 			while (rs.next()) {
-				int id =rs.getInt("id");
+				int id =rs.getInt("film.id");
 				String title = rs.getString("title");
 				String year = rs.getString("release_year");
 				String rating = rs.getString("rating");
